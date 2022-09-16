@@ -17,7 +17,16 @@
         <table>
             <tr>
                 <th><a href="p/action.php">Kod produktu</a></th>
-                <th>Cena</th>
+                <th>
+                <form method="post" action="">
+                    <input name="Cena" type="submit" value="cena">
+                </form>
+                </th>
+                <th>
+                <form method="post" action="">
+                    <input name="Popis" type="submit" value="popis">
+                </form>
+                </th>
                 <th>Popis</th><th>Typ produktu</th>
                 <th>Vyrobce<th>
             </tr>
@@ -26,38 +35,54 @@
          $dbuser = 'vojta';
          $dbpass = 'vojta';
          $dbName = 'phpcko';
-         $mysqli = new mysqli($dbhost, $dbuser, $dbpass, $dbName);
-         if($mysqli->connect_errno){
-             die("Connection failed: ". $mysqli->connect_error);
-         }
-         echo "Connection succes<br/>";
-         //sql dotaz
+         $conn = mysqli_connect($dbhost, $dbuser, $dbpass, $dbName);
+        // Check connection
+        if (!$conn) {
+            die("Connection failed: " . mysqli_connect_error());
+        }
+        echo "Connected successfully";
          $sql = "SELECT * FROM produkty INNER JOIN vyrobci on vyrobci = vyrobci_idvyrobci INNER JOIN typy_produktu ON idtypy_produktu = typy_produktu_idtypy_produktu LIMIT 10";
-
-         $data = $mysqli->query($sql);
-     
-         //output data
-         if($data->num_rows > 0){
-             while($row = $data->fetch_assoc()){
+         //sql dotaz
+         if($_SERVER["REQUEST_METHOD"] == "POST") {
+            // collect value of input field
+            
+            if (isset($_POST['Cena'])) {
+                $sql = ret_sql($_POST['Cena']);
+            }
+            else if(isset($_POST['Popis'])){
+                $sql = ret_sql($_POST['Popis']);
+            }  
+            else if(isset($_POST['Popis'])){
+                $sql = ret_sql($_POST['Popis']);
+            }  
+            else{
+                $sql = "SELECT * FROM produkty INNER JOIN vyrobci on vyrobci = vyrobci_idvyrobci INNER JOIN typy_produktu ON idtypy_produktu = typy_produktu_idtypy_produktu LIMIT 10";
+            }
+        }
+        $data = mysqli_query($conn, $sql); 
+        if(mysqli_num_rows($data) > 0){
+            while($row = mysqli_fetch_assoc($data)){
                 echo "<tr><td>" . $row["kod_produktu"] . "</td>";
                 echo "<td>". $row["cena"] . " Kč</td>";
                 echo "<td>" . $row["popis"] . "</td>";
-                 echo "<td>". $row["typ"] . "</td>";
+                echo "<td>". $row["typ"] . "</td>";
                 echo "<td>". $row["vyrobci"] . "</td>";
                 echo "</tr>";
-             }
-         }
-         else{
-             echo "0 results";
-         }
-         $mysqli->close();
+            }
+        }
+        else{
+            echo "0 results";
+        } 
+         
+
+        function ret_sql($x){
+            return "SELECT * FROM produkty INNER JOIN vyrobci on vyrobci = vyrobci_idvyrobci INNER JOIN typy_produktu ON idtypy_produktu = typy_produktu_idtypy_produktu ORDER BY {$x} DESC LIMIT 10";
+        }
+
     ?> 
         </table>
 
-         <form>
-            
-         </form>
-    
+       
 
     </div>
     <!-- Optional JavaScript -->

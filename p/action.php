@@ -1,3 +1,5 @@
+
+<table>
 <?php
  $dbhost = 'localhost';
  $dbuser = 'vojta';
@@ -8,7 +10,7 @@
      die("Connection failed: ". $mysqli->connect_error);
  }
  echo "Connection succes<br/>";
-  $sql = "SELECT * FROM produkty WHERE kod_produktu DESC";
+  $sql = "SELECT * FROM produkty where cena > 5000";
   $data = $mysqli->query($sql);
   //output data
   if($data->num_rows > 0){
@@ -16,8 +18,8 @@
       echo "<tr><td>" . $row["kod_produktu"] . "</td>";
       echo "<td>". $row["cena"] . " Kč</td>";
       echo "<td>" . $row["popis"] . "</td>";
-      echo "<td>". $row["typ"] . "</td>";
-      echo "<td>". $row["vyrobci"] . "</td>";
+      //echo "<td>". $row["typ"] . "</td>";
+      //echo "<td>". $row["vyrobci"] . "</td>";
       echo "</tr>";
     }
   }
@@ -26,4 +28,5 @@
   }
 $mysqli->close();
 ?>
+<table>
 
