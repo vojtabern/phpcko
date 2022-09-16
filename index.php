@@ -13,6 +13,7 @@
 
     <?php  include 'page/nav.php' ?>
   <body>
+    <!-- Formuláře na klinutí, když kliknout data se seřadí. -->
     <div class="container">
         <table>
             <tr>
@@ -39,21 +40,27 @@
                 </form></th>
             </tr>
     <?php
+        //udaje o databazi potrebne k pripojeni k phpmyadmin
          $dbhost = 'localhost';
          $dbuser = 'vojta';
          $dbpass = 'vojta';
          $dbName = 'phpcko';
          $LIMIT = "LIMIT 10";
+         //pripojovani se
          $conn = mysqli_connect($dbhost, $dbuser, $dbpass, $dbName);
-        // Check connection
+        // kontrola pripojeni
         if (!$conn) {
             die("Connection failed: " . mysqli_connect_error());
         }
         echo "Connected successfully";
+        //sql dotaz jako string
          $x = "SELECT * FROM produkty INNER JOIN vyrobci on vyrobci = vyrobci_idvyrobci INNER JOIN typy_produktu ON idtypy_produktu = typy_produktu_idtypy_produktu " . $LIMIT;
          $sql = $x;
          //sql dotaz
+         //funkce mysqli_query (mysqli_dotaz, davame do nej pripojeni a sql)
          $data = mysqli_query($conn, $sql); 
+
+         //cast odpovedi na Form
          if($_SERVER["REQUEST_METHOD"] == "POST") {         
             if (isset($_POST['Cena'])) {
                 $sql =  ret_sql($_POST['Cena']);
@@ -76,12 +83,13 @@
                 vypis(mysqli_query($conn, $sql));
             }  
         }
+        //konec casti
+        //kdyz na nic neklinul tak 
         else{
             $sql = $x;
             vypis(mysqli_query($conn, $sql));
         }
         $data = mysqli_query($conn, $sql); 
-        //vypis($data);
 
         function vypis($data){
             if(mysqli_num_rows($data) > 0){
@@ -104,6 +112,7 @@
         }
     ?> 
         </table>
+        <!-- Export tlacitko cast (internet) -->
     </div>
     <div class="container">
         <div class="float-right">
