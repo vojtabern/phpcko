@@ -43,13 +43,14 @@
          $dbuser = 'vojta';
          $dbpass = 'vojta';
          $dbName = 'phpcko';
+         $LIMIT = "LIMIT 10";
          $conn = mysqli_connect($dbhost, $dbuser, $dbpass, $dbName);
         // Check connection
         if (!$conn) {
             die("Connection failed: " . mysqli_connect_error());
         }
         echo "Connected successfully";
-         $x = "SELECT * FROM produkty INNER JOIN vyrobci on vyrobci = vyrobci_idvyrobci INNER JOIN typy_produktu ON idtypy_produktu = typy_produktu_idtypy_produktu LIMIT 10";
+         $x = "SELECT * FROM produkty INNER JOIN vyrobci on vyrobci = vyrobci_idvyrobci INNER JOIN typy_produktu ON idtypy_produktu = typy_produktu_idtypy_produktu " . $LIMIT;
          $sql = $x;
          //sql dotaz
          $data = mysqli_query($conn, $sql); 
@@ -67,11 +68,11 @@
                 vypis(mysqli_query($conn, $sql));
             }  
             else if(isset($_POST['Typ_produktu'])){
-                $sql =  "SELECT * FROM produkty INNER JOIN vyrobci on vyrobci = vyrobci_idvyrobci INNER JOIN typy_produktu ON idtypy_produktu = typy_produktu_idtypy_produktu ORDER BY typy_produktu.typ ASC";
+                $sql =  "SELECT * FROM produkty INNER JOIN vyrobci on vyrobci = vyrobci_idvyrobci INNER JOIN typy_produktu ON idtypy_produktu = typy_produktu_idtypy_produktu ORDER BY typy_produktu.typ ASC ". $LIMIT;
                 vypis(mysqli_query($conn, $sql));
             }  
             else if(isset($_POST['Vyrobce'])){
-                $sql =  "SELECT * FROM produkty INNER JOIN vyrobci on vyrobci = vyrobci_idvyrobci INNER JOIN typy_produktu ON idtypy_produktu = typy_produktu_idtypy_produktu ORDER BY vyrobci.vyrobci ASC";
+                $sql =  "SELECT * FROM produkty INNER JOIN vyrobci on vyrobci = vyrobci_idvyrobci INNER JOIN typy_produktu ON idtypy_produktu = typy_produktu_idtypy_produktu ORDER BY vyrobci.vyrobci ASC ". $LIMIT;
                 vypis(mysqli_query($conn, $sql));
             }  
         }
@@ -98,17 +99,19 @@
             } 
         }
          
-
         function ret_sql($x){
             return "SELECT * FROM produkty INNER JOIN vyrobci on vyrobci = vyrobci_idvyrobci INNER JOIN typy_produktu ON idtypy_produktu = typy_produktu_idtypy_produktu ORDER BY {$x} ASC LIMIT 10";
         }
-
     ?> 
         </table>
-
-       
-
     </div>
+    <div class="container">
+        <div class="float-right">
+            <a href="exportData.php" class="btn btn-success"><i class="dwn"></i> Export</a>
+        </div>
+    </div>
+
+
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
