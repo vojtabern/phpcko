@@ -91,3 +91,7 @@ table, th, td {
 td{
     padding: 15px;
 }
+
+form{
+    display: inline;
+}

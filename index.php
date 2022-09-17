@@ -15,28 +15,9 @@
     <?php  include 'page/nav.php' ?>
   <body>
     <!-- Formuláře na klinutí, když kliknout data se seřadí. -->
+    <div class="container-fluid"> 
     <div class="container">
-
-
-                <form method="post" action="">
-                    <input name="Kod" type="submit" value="kod_produktu">
-                </form>
-                <form method="post" action="">
-                    <input name="Cena" type="submit" value="cena">
-                </form>
-                <form method="post" action="">
-                    <input name="Popis" type="submit" value="popis">
-                </form>
-
-                <form method="post" action="">
-                    <input name="Typ_produktu" type="submit" value="typ_produktu">
-                </form>
-                <form method="post" action="">
-                    <input name="Vyrobce" type="submit" value="Vyrobce">
-                </form>
-                <form method="post" action="">
-                  <input name="idproduct" type="submit" method="post" action="" class="bi-arrow-down" value="&uarr;&darr;" class="btn btn-outline-dark btn-sm"><i class="bi-arrow-down"></i>
-                </form>
+                
    <?php 
     //connection 
         require_once "con_create.php";
@@ -46,38 +27,30 @@
     ?>
     
     <?php
-    //sql dotaz
-    $vyrobci = " JOIN vyrobci on vyrobci = vyrobci_idvyrobci ";
-    $typ = " JOIN typy_produktu on idproduct = product_idproduct ";
-    $sql = "SELECT * FROM produkty". $vyrobci.$typ;
-    //konec sql dotazu
+      //sql dotaz
+      $vyrobci = " JOIN vyrobci on vyrobci = vyrobci_idvyrobci ";
+      $typ = " JOIN typy_produktu on idproduct = product_idproduct ";
+      //$sql = "SELECT * FROM produkty". $vyrobci.$typ;
+      //konec sql dotazu
     ?>
 
     <?php 
-    if(isset($_POST['idproduct'])){
-      $typ = $typ .' ORDER BY idproduct DESC';
-      $sql = "SELECT * FROM produkty". $vyrobci.$typ;
-    }
-    ?>
-
-    <?php 
-  //vypis
-    echo "<table>";
-    echo "<tr>";
-    echo '<th>Id produktu:<button type="button submit" method="post" action="" class="btn btn-outline-dark btn-sm"><i class="bi-arrow-down"></i> </button></th>';
-    echo "<th>Kod produktu:</th>";
-    echo "<th>Cena:</th>";
-    echo "<th>Popis:</th>";
-    echo "<th>Typ vyrobku:</th>";
-    echo "<th>Vyrobce:</th>";
-    echo "</tr>";
-    $result = $conn->connection->query($sql);
-    $vypis = new Vypis;
-    $vypis->Table($result);
-    echo "</table>"
-    //konec vypisu
+      //vypis
+      $hlavicka = new Hlavicka;
+      $hlavicka->Forms();
+      $sql = $hlavicka->Control($typ, $vyrobci);
+      //echo $sql;
+      $result = $conn->connection->query($sql);
+      $vypis = new Vypis;
+      $vypis->Table($result);
+      echo "</table>"
+      //konec vypisu
     ?>
         <!-- Export tlacitko cast (internet) -->
+        <form method="post" action="">
+        <input name="" type="submit" value="Reset řazení">
+      </form>
+    </div>
     </div>
     <div class="container">
         <div class="float-right">
