@@ -1,20 +1,22 @@
 <?php 
     class Hlavicka{
-        public function Forms(){
+        public function Forms($arr){
             echo "<table>";
             echo "<tr>";
+            //if($arr === 'id_produktu'){
             echo '<th>
             <form method="post" action="">
             Id produktu:
             <input name="idproduct_up" type="submit" method="post" value="&uarr;" class="btn btn-outline-dark btn-sm">
             <input name="idproduct_down" type="submit" method="post" value="&darr;" class="btn btn-outline-dark btn-sm">
-            </form></th>';
+            </form></th>';//}
+           //if($arr === 'kod_produktu'){
             echo '<th>
             <form method="post" action="">
             Kod produktu:
             <input name="codeproduct_up" type="submit" method="post" value="&uarr;" class="btn btn-outline-dark btn-sm">
             <input name="codeproduct_down" type="submit" method="post"  value="&darr;" class="btn btn-outline-dark btn-sm">
-            </form></th>';
+            </form></th>';//}
             echo '<th>
             <form method="post" action="">
             Cena:
@@ -83,21 +85,43 @@
     }
 
   class Vypis extends Connect{
+    private $pokus;
     public function Table($result){
       if ($result !== false && $result->num_rows > 0) {
         // output data of each row
         while($row = $result->fetch_assoc()) {
           echo "<tr>";
-          echo "<td>" . $row["id_produktu"]. "</td>";
-          echo "<td>" . $row["kod_produktu"]. "</td>";
-          echo "<td>" . $row["cena"]. "</td>";
-          echo "<td> " . $row["popis"]. "</td>";
-          echo "<td>" . $row["typ"]. "</td>" ;
-          echo "<td>" . $row["vyrobci"]. "</td>";
+            if(!empty($row["id_produktu"])){
+                echo "<td>" . $row["id_produktu"]. "</td>";
+                $this->pokus ='id_produktu';
+            }
+            if(!empty($row["kod_produktu"])){
+                echo "<td>" . $row["kod_produktu"]. "</td>";
+                $this->pokus ='kod_produktu';
+            }
+            if(!empty($row["cena"])){
+                echo "<td>" . $row["cena"]. "</td>";
+                $this->pokus = 'cena';
+            }
+            if(!empty($row["popis"])){
+                echo "<td> " . $row["popis"]. "</td>";
+                $this->pokus = 'popis';
+            }
+            if(!empty($row["typ"])){
+                echo "<td>" . $row["typ"]. "</td>" ;
+                $this->pokus = 'typ';
+            }
+            if(!empty($row["vyrobci"])){
+                echo "<td>" . $row["vyrobci"]. "</td>";
+                $this->pokus ='vyrobci';
+            } 
         }
       } else {
         echo "0 results";
       }
+    }
+    public function getArr(){
+        return $this->pokus;
     }
   }
   ?>

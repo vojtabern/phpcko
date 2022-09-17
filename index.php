@@ -16,8 +16,8 @@
   <body>
     <!-- Formuláře na klinutí, když kliknout data se seřadí. -->
     <div class="container-fluid"> 
-    <div class="container">
-                
+      <div class="container">
+        <div class="col-md-12">    
    <?php 
     //connection 
         require_once "con_create.php";
@@ -37,21 +37,39 @@
     <?php 
       //vypis
       $hlavicka = new Hlavicka;
-      $hlavicka->Forms();
+      $vypis = new Vypis;
+      $hlavicka->Forms($vypis->getArr());
       $sql = $hlavicka->Control($typ, $vyrobci);
       //echo $sql;
       $result = $conn->connection->query($sql);
-      $vypis = new Vypis;
+      
       $vypis->Table($result);
       echo "</table>"
       //konec vypisu
     ?>
         <!-- Export tlacitko cast (internet) -->
-        <form method="post" action="">
+      <form method="post" action="">
         <input name="" type="submit" value="Reset řazení">
       </form>
+      </div>
     </div>
+    <div class="container">
+      <div class="col-md-10 text-center">
+        <form action="filter.php" method="post" >  
+          Id Produktu<input name="filter" type="radio" value="id_produktu">
+          Kod Produktu<input name="filter" type="radio" value="kod_produktu">
+          Cena<input name="filter" type="radio" value="cena">
+          Popis<input name="filter" type="radio" value="popis">
+          Typ výrobku<input name="filter" type="radio" value="typ">
+          Výrobce<input name="filter" type="radio" value="vyrobci">
+          <input type="submit" value="Vyfiltrovat">
+        </form>
+      </div>
     </div>
+    <?php
+    //require "filter.php";
+    ?>
+  </div>
     <div class="container">
         <div class="float-right">
             <a href="exportData.php" class="btn btn-success"><i class="dwn"></i> Export</a>
