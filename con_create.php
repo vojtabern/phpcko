@@ -2,7 +2,7 @@
     define("DBHOST", "localhost");
     define("DBUSER", "vojta");
     define("DBPASS", "vojta");
-    define("DBNAME", "vyrobky");
+    define("DBNAME", "moje");
     //udaje o databazi potrebne k pripojeni k phpmyadmin
         $LIMIT = "LIMIT 10";
         include "static/create.php";  

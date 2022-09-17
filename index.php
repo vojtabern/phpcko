@@ -9,63 +9,74 @@
     <link rel="stylesheet" href="static/CSS/style.css" type="text/css">
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
   </head>
 
     <?php  include 'page/nav.php' ?>
   <body>
     <!-- Formuláře na klinutí, když kliknout data se seřadí. -->
     <div class="container">
-        <table>
-            <tr>
-                <th>
+
+
                 <form method="post" action="">
                     <input name="Kod" type="submit" value="kod_produktu">
                 </form>
-                </th>
-                <th>
                 <form method="post" action="">
                     <input name="Cena" type="submit" value="cena">
                 </form>
-                </th>
-                <th>
                 <form method="post" action="">
                     <input name="Popis" type="submit" value="popis">
                 </form>
-                </th>
-                <th><form method="post" action="">
+
+                <form method="post" action="">
                     <input name="Typ_produktu" type="submit" value="typ_produktu">
-                </form></th>
-                <th><form method="post" action="">
+                </form>
+                <form method="post" action="">
                     <input name="Vyrobce" type="submit" value="Vyrobce">
-                </form></th>
-            </tr>
+                </form>
+                <form method="post" action="">
+                  <input name="idproduct" type="submit" method="post" action="" class="bi-arrow-down" value="&uarr;&darr;" class="btn btn-outline-dark btn-sm"><i class="bi-arrow-down"></i>
+                </form>
+   <?php 
+    //connection 
+        require_once "con_create.php";
+        require_once "vypis.php";
+        $conect = $conn;
+    //end of connection
+    ?>
+    
+    <?php
+    //sql dotaz
+    $vyrobci = " JOIN vyrobci on vyrobci = vyrobci_idvyrobci ";
+    $typ = " JOIN typy_produktu on idproduct = product_idproduct ";
+    $sql = "SELECT * FROM produkty". $vyrobci.$typ;
+    //konec sql dotazu
+    ?>
 
-        </table>
+    <?php 
+    if(isset($_POST['idproduct'])){
+      $typ = $typ .' ORDER BY idproduct DESC';
+      $sql = "SELECT * FROM produkty". $vyrobci.$typ;
+    }
+    ?>
 
-        <?php 
-        //connection 
-            require_once "connect.php";
-            $conect = $conn;
-        //end of connection
-        ?>
-
-        <?php
-        $vyrobci = " JOIN vyrobci on vyrobci = vyrobci_idvyrobci ";
-        $typ = " JOIN typy_produktu on idproduct = product_idproduct ";
-        $sql = "SELECT * FROM produkty". $vyrobci.$typ;
-        $conn->connection->query($sql);
-        $result = $conect->connection->query($sql);
-        
-        if ($result !== false && $result->num_rows > 0) {
-          // output data of each row
-          while($row = $result->fetch_assoc()) {
-            echo "id_produktu: " . $row["id_produktu"]. " - Kod: " . $row["kod_produktu"]. " - Cena: " . $row["cena"]. "<br>";
-            echo "Popis: " . $row["popis"]. " - Typ vyrobku: " . $row["typ"]. " - Vyrobce: " . $row["vyrobci"]. "<br>";
-          }
-        } else {
-          echo "0 results";
-        }
-        ?>
+    <?php 
+  //vypis
+    echo "<table>";
+    echo "<tr>";
+    echo '<th>Id produktu:<button type="button submit" method="post" action="" class="btn btn-outline-dark btn-sm"><i class="bi-arrow-down"></i> </button></th>';
+    echo "<th>Kod produktu:</th>";
+    echo "<th>Cena:</th>";
+    echo "<th>Popis:</th>";
+    echo "<th>Typ vyrobku:</th>";
+    echo "<th>Vyrobce:</th>";
+    echo "</tr>";
+    $result = $conn->connection->query($sql);
+    $vypis = new Vypis;
+    $vypis->Table($result);
+    echo "</table>"
+    //konec vypisu
+    ?>
         <!-- Export tlacitko cast (internet) -->
     </div>
     <div class="container">
