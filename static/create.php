@@ -2,7 +2,7 @@
 $typy_produktu = 'CREATE TABLE IF NOT EXISTS `'.DBNAME.'`.`typy_produktu` (`idproduct` INT NOT NULL, `typ` ENUM("Turbodmychadla", "Čerpadla", "Vstřikovače") NOT NULL, PRIMARY KEY (`idproduct`)) ENGINE = InnoDB;';
 $vyrobci = 'CREATE TABLE IF NOT EXISTS `'.DBNAME.'`.`vyrobci` (
     `idvyrobci` INT NOT NULL,
-    `vyrobci` ENUM("Bosch", "Delphi", "Garte") NOT NULL,
+    `vyrobci` ENUM("Bosch", "Delphi", "Garte", "Garret", "Denso", "KKK") NOT NULL,
     PRIMARY KEY (`idvyrobci`))
 ENGINE = InnoDB;';
 $produkty = "CREATE TABLE IF NOT EXISTS ".DBNAME.".`produkty` (

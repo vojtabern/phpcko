@@ -64,10 +64,7 @@
         </form>
       </div>
     </div>
-    <?php
-    //require "filter.php";
-    ?>
-  </div>
+
     <div class="container">
         <div class="float-right">
             <a href="exportData.php" class="btn btn-success"><i class="dwn"></i> Export</a>

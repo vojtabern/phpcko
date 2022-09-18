@@ -1,16 +1,15 @@
 <?php 
-$dbhost = 'localhost';
-$dbuser = 'vojta';
-$dbpass = 'vojta';
-$dbName = 'moje';
-require_once "con_create.php";
-//require "vypis.php";
-//require "index.php";
 
+require_once "con_create.php";
+require "vypis.php";
+//require "index.php";
+$vyrobci = " JOIN vyrobci on vyrobci = vyrobci_idvyrobci ";
+$typ = " JOIN typy_produktu on idproduct = product_idproduct ";
  //nezachova si razeni, musim nejak poslat $sql
+    $razeni = new Hlavicka;
     
   $x = 'SELECT * FROM produkty JOIN vyrobci on vyrobci = vyrobci_idvyrobci JOIN typy_produktu on idproduct = product_idproduct ';
-  $query = $conn->connection->query($x);
+  $query = $conn->connection->query($razeni->Control($typ, $vyrobci));
   //$query =  mysqli_query($conn, $x);
  
 // dostane záznamy z databáze

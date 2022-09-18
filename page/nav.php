@@ -22,6 +22,9 @@
             <li>
                 <a class="odkaz" href="./index.php">Katalog produktů</a>
             </li>
+            <li>
+                <a class="odkaz" href="./admin.php">Admin</a>
+            </li>
         </ul>
     </div></div>
 

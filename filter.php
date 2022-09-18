@@ -15,15 +15,15 @@
             echo "<table>";
             echo "<tr>";
             if($filter == "typ"){
-                $sql = "SELECT ".$filter." FROM typy_produktu LIMIT 10";
+                $sql = "SELECT ".$filter." FROM typy_produktu";
                 echo "<th>Typ výrobku</th>";
             }
             else if($filter == "vyrobci"){
-                $sql = "SELECT ".$filter." FROM vyrobci LIMIT 10";
+                $sql = "SELECT ".$filter." FROM vyrobci";
                 echo "<th>Výrobce</th>";
             }
             else{
-                $sql = "SELECT ".$filter." FROM produkty LIMIT 10";
+                $sql = "SELECT ".$filter." FROM produkty";
                 echo "<th>".$filter."</th>";      
             }
             echo "</tr>";
