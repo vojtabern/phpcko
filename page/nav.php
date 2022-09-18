@@ -20,12 +20,7 @@
     <div class="navigace container">
         <ul>
             <li>
-                <a class="odkaz" href="#">Katalog produktů &#x2193</a>
-                <ul>
-                    <li><a href="#">Link 1</a></li>
-                    <li><a href="#">Link 2</a></li>
-                    <li><a href="#">Link 3</a></li>
-                </ul>
+                <a class="odkaz" href="./index.php">Katalog produktů</a>
             </li>
         </ul>
     </div></div>

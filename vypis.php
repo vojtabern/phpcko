@@ -1,15 +1,14 @@
 <?php 
     class Hlavicka{
-        public function Forms($arr){
+        public function Forms(){
             echo "<table>";
             echo "<tr>";
-            //if($arr === 'id_produktu'){
             echo '<th>
             <form method="post" action="">
             Id produktu:
             <input name="idproduct_up" type="submit" method="post" value="&uarr;" class="btn btn-outline-dark btn-sm">
             <input name="idproduct_down" type="submit" method="post" value="&darr;" class="btn btn-outline-dark btn-sm">
-            </form></th>';//}
+            </form></th>';
            //if($arr === 'kod_produktu'){
             echo '<th>
             <form method="post" action="">
@@ -80,12 +79,12 @@
               else if(isset($_POST['vyrobci_down'])){
                 $typ = $typ .' ORDER BY vyrobci_idvyrobci DESC';
               }
-              return ("SELECT * FROM produkty". $vyrobci.$typ);
+              return ("SELECT * FROM produkty". $vyrobci.$typ." LIMIT 10");
         }
     }
 
   class Vypis extends Connect{
-    private $pokus;
+    private $pokus = array();
     public function Table($result){
       if ($result !== false && $result->num_rows > 0) {
         // output data of each row
@@ -93,27 +92,39 @@
           echo "<tr>";
             if(!empty($row["id_produktu"])){
                 echo "<td>" . $row["id_produktu"]. "</td>";
-                $this->pokus ='id_produktu';
-            }
+                array_push($this->pokus,'id_produktu');
+            }else{
+                echo "<td></td>";
+            } 
             if(!empty($row["kod_produktu"])){
                 echo "<td>" . $row["kod_produktu"]. "</td>";
-                $this->pokus ='kod_produktu';
-            }
+                array_push($this->pokus, 'kod_produktu');
+            }else{
+                echo "<td></td>";
+            } 
             if(!empty($row["cena"])){
-                echo "<td>" . $row["cena"]. "</td>";
-                $this->pokus = 'cena';
-            }
+                echo "<td>" . $row["cena"]. " Kč</td>";
+                array_push($this->pokus, 'cena');
+            }else{
+                echo "<td></td>";
+            } 
             if(!empty($row["popis"])){
                 echo "<td> " . $row["popis"]. "</td>";
-                $this->pokus = 'popis';
-            }
+                array_push($this->pokus, 'popis');
+            }else{
+                echo "<td></td>";
+            } 
             if(!empty($row["typ"])){
                 echo "<td>" . $row["typ"]. "</td>" ;
-                $this->pokus = 'typ';
-            }
+                array_push($this->pokus, 'typ');
+            }else{
+                echo "<td></td>";
+            } 
             if(!empty($row["vyrobci"])){
                 echo "<td>" . $row["vyrobci"]. "</td>";
-                $this->pokus ='vyrobci';
+                array_push($this->pokus,'vyrobci');
+            }else{
+                echo "<td></td>";
             } 
         }
       } else {

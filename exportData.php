@@ -2,16 +2,16 @@
 $dbhost = 'localhost';
 $dbuser = 'vojta';
 $dbpass = 'vojta';
-$dbName = 'phpcko';
- $conn = mysqli_connect($dbhost, $dbuser, $dbpass, $dbName);
- // zkontroluje připojení
- if (!$conn) {
-     die("Connection failed: " . mysqli_connect_error());
- }
- echo "Connected successfully";
+$dbName = 'moje';
+require_once "con_create.php";
+//require "vypis.php";
+//require "index.php";
+
  //nezachova si razeni, musim nejak poslat $sql
-  $x = "SELECT * FROM produkty INNER JOIN vyrobci on vyrobci = vyrobci_idvyrobci INNER JOIN typy_produktu ON idtypy_produktu = typy_produktu_idtypy_produktu ";
-  $query =  mysqli_query($conn, $x);;
+    
+  $x = 'SELECT * FROM produkty JOIN vyrobci on vyrobci = vyrobci_idvyrobci JOIN typy_produktu on idproduct = product_idproduct ';
+  $query = $conn->connection->query($x);
+  //$query =  mysqli_query($conn, $x);
  
 // dostane záznamy z databáze
  
@@ -28,7 +28,7 @@ if(mysqli_num_rows($query) > 0){
      
     // Output each row of the data, format line as csv and write to file pointer 
     while($row = $query->fetch_assoc()){ 
-        $lineData = array($row['kod_produktu'], $row['cena'], $row['popis'], $row['typ'], $row['vyrobci']); 
+        $lineData = array($row['id_produktu'], $row['kod_produktu'], $row['cena'], $row['popis'], $row['typ'], $row['vyrobci']); 
         fputcsv($f, $lineData, $delimiter); 
     } 
      
