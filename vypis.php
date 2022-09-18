@@ -81,6 +81,37 @@
               }
               return ("SELECT * FROM produkty". $vyrobci.$typ." LIMIT 10");
         }
+        public function Header(){
+          echo "<tr>";
+          echo '<th>
+          
+          Id produktu:
+          
+          </th>';
+         //if($arr === 'kod_produktu'){
+          echo '<th>
+         
+          Kod produktu:
+          </th>';//}
+          echo '<th>
+          
+          Cena:
+          </th>';
+          echo '<th> 
+          
+          Popis:
+          </th>';
+          echo '<th>
+          
+          Typ vyrobku:
+          </th>';
+          echo '<th>
+         
+          Vyrobce:
+          </th>';
+          echo "</tr>";
+      }
+
     }
 
   class Vypis extends Connect{

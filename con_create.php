@@ -1,7 +1,7 @@
 <?php  
     define("DBHOST", "localhost");
-    define("DBUSER", "vojta");
-    define("DBPASS", "vojta");
+    define("DBUSER", "root");
+    //define("DBPASS", "root");
     define("DBNAME", "moje");
     //udaje o databazi potrebne k pripojeni k phpmyadmin
         $LIMIT = "LIMIT 10";
@@ -12,7 +12,7 @@
         
 
         public function Connection(){
-            $this->connection = new mysqli(DBHOST, DBUSER, DBPASS);
+        $this->connection = new mysqli(DBHOST, DBUSER, /*DBPASS*/);
             if($this->connection->connect_error){
                 die("Connection Failed" . " " .$this->connection->connect_error);
             }

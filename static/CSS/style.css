@@ -1,3 +1,15 @@
+body{ 
+    display:flex; 
+    flex-direction:column; 
+  }
+
+footer{
+    background-color: #111;
+    text-align: center;
+    margin-top: 5%;
+    color: aliceblue;
+
+}
 
 .uvodni{
     font-weight: bold;
@@ -95,3 +107,4 @@ td{
 form{
     display: inline;
 }
+

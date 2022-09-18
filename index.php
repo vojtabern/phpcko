@@ -74,7 +74,67 @@
         </div>
     </div>
 
+    <?php 
+      include "where.php";
+    ?>
+    <div class="container">
+      <div class="col-md-10 text-center">
+    <?php
+     if(!empty($_POST["where"]) && !empty($_POST["hodnota"]) && !empty($_POST["jak"])){
+        $where = $_POST["where"];
+        $value = $_POST["hodnota"];
+        $jak = $_POST["jak"];
+        //echo var_dump($value);
+        if($where == "typ"){
+          $sql = "SELECT * FROM produkty ".$vyrobci.$typ." WHERE " . $where. $jak. "'" . $value . "'";
+        }
+        else if($where == "vyrobci"){
+          $sql = "SELECT * FROM produkty ".$vyrobci.$typ. " WHERE " . $where.  $jak. "'" . $value . "'";
+        }
+        else{
+          $sql = "SELECT * FROM produkty ".$vyrobci.$typ." WHERE " . $where.  $jak. "'" . $value . "'";
+        }
 
+        $result = $conn->connection->query($sql);
+            if ($result !== false && $result->num_rows > 0) {
+                $i=0;
+                echo "<table><tr>";
+                $hlavicka->Header();
+                // output data of each row
+                while($row = $result->fetch_assoc()) {
+                    if($i=1){
+                      echo "<tr>";
+                    }
+                    echo  "<td>".$row["id_produktu"]."</td>";
+                    echo  "<td>".$row["kod_produktu"]."</td>";
+                    echo  "<td>".$row["cena"]."</td>";
+                    echo  "<td>".$row["popis"]."</td>";
+                    echo  "<td>".$row["typ"]."</td>";
+                    echo  "<td>".$row["vyrobci"]."</td>";
+                    if($i=1){
+                      echo "</tr>";
+                      $i=0;
+                    }
+                    $i++;
+                    
+                    //echo $row[$where];
+                }
+                echo "</tr></table>";
+            }
+            else{
+                echo "Zadana hodnota " . $value . " neexistuje, nebo není na vámi zadaném indexu " .$where;
+            }
+            //echo $sql;
+
+        //echo "<br/>" . $where . " ". $value;
+
+
+     }
+
+?>
+      </div>
+  </div>
+     <?php include 'page/footer.php' ?>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <?php  include 'page/scripts.php' ?>

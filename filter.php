@@ -33,7 +33,7 @@
             if ($result !== false && $result->num_rows > 0) {
                 // output data of each row
                 while($row = $result->fetch_assoc()) {
-                    echo  "<tr><td>".$row[$filter]."<td></tr>";
+                    echo  "<tr><td>".$row[$filter]."</td></tr>";
                 }
             }
             echo "</table>";
@@ -46,4 +46,5 @@
     </div>
     </div>
 </body>
+<?php include "page/footer.php" ?>  
 <?php include "page/scripts.php" ?>  
