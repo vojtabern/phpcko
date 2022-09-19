@@ -170,13 +170,21 @@
 
     $conn->Connection();
     //selectnu databazi
-    $select_db = mysqli_select_db($conn->connection, DBNAME); 
-    //pokud dana databaze neexistuje vytvorim ji a s ni i vsechny potrebne tabulky
-    if(!$select_db){
-        $conn->getCreate();
-        $conn->setTable($typy_produktu);   
-        $conn->setTable($vyrobci);
-        $conn->setTable($produkty);
-        $conn->getInsert();
-    } 
+
+    try{
+        if(mysqli_select_db($conn->connection, DBNAME)){
+           throw new Exception("database already exist");
+        }
+        else{
+            $conn->getCreate();
+            $conn->setTable($typy_produktu);   
+            $conn->setTable($vyrobci);
+            $conn->setTable($produkty);
+            $conn->getInsert();
+        }
+    }
+    catch(Exception $e){
+        echo 'Message: ' .$e->getMessage();
+    }
+     
 ?> 
